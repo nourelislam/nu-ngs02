@@ -185,7 +185,7 @@ for sample in *.bqsr.bam;do
   -R dog_chr5.fa -I $sample \
   --emit-ref-confidence GVCF \
   --pcr-indel-model NONE \
-  -O $name.gvcf
+  -O $name.gvcf  #### gvcf has the PROBABILITIES of the genotype by dividing the whole reads into columns to separate the variants which represents by the start: end of the fragments in this file
 done
 
 ## combine samples
