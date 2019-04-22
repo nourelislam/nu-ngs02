@@ -112,7 +112,7 @@ done
 for sample in *.sorted.bam;do
   name=${sample%.sorted.bam}
   java  -Xmx2g -jar $picard_path/picard.jar MarkDuplicates INPUT=$sample OUTPUT=$name.dedup.bam METRICS_FILE=$name.metrics.txt;
-done
+done #### dupicate means that the read duplicate more than one time via the starting and ending position no matter the matching or mismatching with the genome ( the same start-end)==replicating
 ```
 
 ## Install GATK
