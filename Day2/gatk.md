@@ -27,8 +27,9 @@ for R1 in ~/workdir/fqData/*_R1_001.pe.fq.gz;do
     SM=$(basename $R1 | cut -d"_" -f1)                                          ##sample ID
     LB=$(basename $R1 | cut -d"_" -f1,2)                                        ##library ID
     PL="Illumina"                                                           ##platform (e.g. illumina, solid)
-    RGID=$(zcat $R1 | head -n1 | sed 's/:/_/g' |cut -d "_" -f1,2,3,4)       ##read group identifier 
-    PU=$RGID.$LB                                                            ##Platform Unit
+    RGID=$(zcat $R1 | head -n1 | sed 's/:/_/g' |cut -d "_" -f1,2,3,4)       ##read group identifier ### @D3VG1JS1:214:C7RNWACXX:5:1101 (clustal_name):1041:57008/(x,y used for optical_duplicate) ##read group identifier   ######this conversion from : to _ for samtools
+    PU=$RGID.$LB                                                            ##Platform Unit  ####this RGID is used in SAM in the header metadata and BAM files which has multiple samples from multiple lanes and or machines as a key:values in the last column to indicate which read is come from which read group in the casse of having a lot of samples in one lane or from different machines. while GATK uses these data to calculate the different covariant of the experiment that related to machine or lib. prep. in order to judge on the variant calling in the correct way. In other words, for math. modeling.  ##### -M is for short read aligned that make supplem. alignment (not used) considered as second. alignment (notused), that because short reads may have a lot of hit foe supplem. region.
+
     echo -e "@RG\tID:$RGID\tSM:$SM\tPL:$PL\tLB:$LB\tPU:$PU"
 
     R2=$(echo $R1 | sed 's/_R1_/_R2_/')
